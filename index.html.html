@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meridian Watch Co.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#e8edf0;--ink:#10243a;--mute:#52667a;--brass:#a97c2f;--card:#f6f8f9;--line:#c5d0d8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1b2b;--ink:#e8edf0;--mute:#9db0c2;--brass:#d2a24c;--card:#15273b;--line:#2a4058}}
+:root[data-theme="dark"]{--bg:#0e1b2b;--ink:#e8edf0;--mute:#9db0c2;--brass:#d2a24c;--card:#15273b;--line:#2a4058}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Instrument Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bodoni Moda",Georgia,serif;font-weight:700;line-height:1.1;margin:0}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+nav b{font-family:"Bodoni Moda",serif;font-size:22px;letter-spacing:.02em}
+nav div a{margin-left:22px;text-decoration:none;color:var(--mute);font-weight:500}
+nav div a:hover,nav div a:focus-visible{color:var(--ink)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:30px 0 70px}
+.hero h1{font-size:clamp(40px,6vw,72px)}
+.hero p{max-width:46ch;color:var(--mute);margin:20px 0 28px}
+.btn{display:inline-block;background:var(--ink);color:var(--bg);padding:13px 24px;border-radius:2px;text-decoration:none;font-weight:600}
+.btn:hover{background:var(--brass);color:#fff}
+.hero svg{width:100%;max-width:420px;justify-self:center;filter:drop-shadow(0 18px 24px rgba(16,36,58,.25))}
+section{padding:60px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(30px,4vw,44px);margin-bottom:10px}
+.sub{color:var(--mute);max-width:56ch;margin:0 0 28px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.filters button,.tabs button{font:500 15px "Instrument Sans",sans-serif;padding:8px 16px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:20px;cursor:pointer}
+.filters button[aria-pressed="true"],.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.item{background:var(--card);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column}
+.item svg{width:100%;height:auto;max-height:230px}
+.item h3{font-size:21px;margin:10px 0 2px}
+.item .t{color:var(--mute);font-size:14px;margin:0 0 8px}
+.item .p{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.item .p button{font:500 14px "Instrument Sans",sans-serif;background:none;border:1px solid var(--ink);color:var(--ink);padding:6px 12px;cursor:pointer;border-radius:2px}
+.item .p button:hover{background:var(--ink);color:var(--bg)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+#mv{max-width:62ch;min-height:120px}
+#mv h3{font-size:26px;margin-bottom:8px}
+#mv dl{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin:16px 0 0;color:var(--mute);font-size:15px}
+#mv dt{font-weight:600;color:var(--ink)}
+#mv dd{margin:0}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mute);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:2px;opacity:0;pointer-events:none;transition:.25s}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:760px){.hero{grid-template-columns:1fr;padding-bottom:40px}nav div a{margin-left:14px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><b>Meridian</b><div><a href="#collection">Collection</a><a href="#movements">Movements</a></div></nav>
+<header class="hero">
+<div>
+<h1>Time, worn on the wrist.</h1>
+<p>Six watches, each built around one job: dressing up, diving deep, flying far, or walking home. The one on this page is running on your clock.</p>
+<a class="btn" href="#collection">See the collection</a>
+</div>
+<svg id="hero" viewBox="0 0 200 200" role="img" aria-label="Live analog watch showing the current time"></svg>
+</header>
+
+<section id="collection">
+<h2>The collection</h2>
+<p class="sub">Filter by the kind of day you have in mind.</p>
+<div class="filters" id="filters" role="group" aria-label="Filter watches by type"></div>
+<div class="grid" id="grid"></div>
+</section>
+
+<section id="movements">
+<h2>What's inside</h2>
+<p class="sub">The movement is the engine. Pick one to see how it differs.</p>
+<div class="tabs" role="tablist" id="tabs"></div>
+<div id="mv" role="tabpanel" aria-live="polite"></div>
+</section>
+
+<footer><span>Meridian Watch Co. is a fictional brand made for this demo.</span><span>Prices in USD</span></footer>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+function dial(o){
+  const c=o.dial,f=o.fg,ca=o.case,h=o.h,m=o.m,s=o.s;
+  let t='';
+  for(let i=0;i<60;i++){
+    const a=i*6*Math.PI/180,big=i%5===0,r1=big?78:84,r2=90;
+    t+=`<line x1="${100+r1*Math.sin(a)}" y1="${100-r1*Math.cos(a)}" x2="${100+r2*Math.sin(a)}" y2="${100-r2*Math.cos(a)}" stroke="${f}" stroke-width="${big?2.6:.8}"/>`;
+  }
+  const ha=((h%12)+m/60)*30,ma=m*6+s/10,sa=s*6;
+  const bezel=o.bezel?`<circle cx="100" cy="100" r="98" fill="none" stroke="${o.bezel}" stroke-width="7"/>`:'';
+  const strap=`<rect x="70" y="-6" width="60" height="212" rx="10" fill="${o.strap}"/>`;
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="${o.label||'Watch'}">${o.noStrap?'':strap}
+  <circle cx="100" cy="100" r="99" fill="${ca}"/>${bezel}
+  <circle cx="100" cy="100" r="92" fill="${c}"/>${t}
+  <text x="100" y="64" text-anchor="middle" font-family="Bodoni Moda,serif" font-size="9" fill="${f}">MERIDIAN</text>
+  <g stroke="${f}" stroke-linecap="round">
+  <line x1="100" y1="100" x2="100" y2="58" stroke-width="5" transform="rotate(${ha} 100 100)"/>
+  <line x1="100" y1="104" x2="100" y2="30" stroke-width="3" transform="rotate(${ma} 100 100)"/></g>
+  <g id="${o.id||''}" transform="rotate(${sa} 100 100)"><line x1="100" y1="112" x2="100" y2="22" stroke="${o.sec}" stroke-width="1.4"/></g>
+  <circle cx="100" cy="100" r="4" fill="${o.sec}"/></svg>`;
+}
+const W=[
+ {n:'Alder',t:'Dress',p:480,d:'#f1ece0',fg:'#1b2a3a',c:'#b99552',st:'#3a2a22',sec:'#a63d2f',desc:'Slim case, quiet dial. Fits under a cuff.'},
+ {n:'Fathom',t:'Diver',p:890,d:'#0f2d4a',fg:'#f2f4f5',c:'#8d99a3',st:'#16242f',sec:'#e6a02e',bz:'#e6a02e',desc:'300 m water resistance and a bezel that turns one way.'},
+ {n:'Contrail',t:'Pilot',p:640,d:'#1c2024',fg:'#f2f4f5',c:'#6b7782',st:'#5b4632',sec:'#e0562b',desc:'Large numerals you can read at a glance in poor light.'},
+ {n:'Ridgeline',t:'Field',p:360,d:'#4a5a3c',fg:'#eef0e4',c:'#3a4636',st:'#6a5a40',sec:'#e8d36b',desc:'Matte case and a canvas strap for hikes and commutes.'},
+ {n:'Sable',t:'Dress',p:720,d:'#1a1d27',fg:'#e9dcc0',c:'#c9a45c',st:'#241a16',sec:'#c9a45c',desc:'Black dial, gold case. Made for evenings.'},
+ {n:'Kelp',t:'Diver',p:540,d:'#1d5a52',fg:'#f2f4f5',c:'#aab6b8',st:'#12302d',sec:'#f0f0f0',bz:'#12302d',desc:'A greener take on the dive watch, 200 m rated.'}
+];
+const hero=document.getElementById('hero');
+function tick(){
+  const d=new Date();
+  hero.innerHTML=dial({dial:'#f1ece0',fg:'#10243a',case:'#a97c2f',sec:'#a63d2f',bezel:'#10243a',noStrap:true,label:'Live analog watch',h:d.getHours(),m:d.getMinutes(),s:d.getSeconds()+d.getMilliseconds()/1000});
+}
+tick();setInterval(tick,1000);
+
+const types=['All',...new Set(W.map(w=>w.t))];
+const fEl=document.getElementById('filters'),gEl=document.getElementById('grid'),toast=document.getElementById('toast');
+function show(type){
+  gEl.innerHTML=W.filter(w=>type==='All'||w.t===type).map((w,i)=>`<article class="item">${dial({dial:w.d,fg:w.fg,case:w.c,strap:w.st,sec:w.sec,bezel:w.bz,h:10,m:10,s:30,label:w.n+' watch'})}
+  <h3>${w.n}</h3><p class="t">${w.t} watch. ${w.desc}</p>
+  <div class="p"><span>$${w.p}</span><button data-n="${w.n}">Add to bag</button></div></article>`).join('');
+  [...fEl.children].forEach(b=>b.setAttribute('aria-pressed',b.textContent===type));
+}
+types.forEach(t=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>show(t);fEl.appendChild(b)});
+let bag=0,tm;
+gEl.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-n]');if(!b)return;
+  bag++;toast.textContent=b.dataset.n+' added. '+bag+(bag===1?' watch':' watches')+' in your bag.';
+  toast.classList.add('on');clearTimeout(tm);tm=setTimeout(()=>toast.classList.remove('on'),2200);
+});
+show('All');
+
+const M={
+ Quartz:{h:'Quartz',p:'A battery sends current through a tiny quartz crystal that vibrates 32,768 times a second. A chip counts the vibrations and steps the hands.',dl:[['Accuracy','About 15 seconds a month'],['Upkeep','New battery every 2 to 5 years'],['Best for','Daily wear, low cost']]},
+ Automatic:{h:'Automatic',p:'A weighted rotor spins as you move your wrist and winds the mainspring. No battery, and no need to wind it by hand while you wear it.',dl:[['Accuracy','About 5 to 20 seconds a day'],['Upkeep','Service every 5 to 8 years'],['Best for','People who like to see the mechanics']]},
+ Manual:{h:'Manual wind',p:'You turn the crown each day to wind the mainspring. With no rotor, the movement can be thinner, which suits dress watches.',dl:[['Accuracy','About 5 to 20 seconds a day'],['Upkeep','Wind daily, service every 5 to 8 years'],['Best for','Slim cases and a daily ritual']]}
+};
+const tabs=document.getElementById('tabs'),mv=document.getElementById('mv');
+function pick(k){
+  const x=M[k];
+  mv.innerHTML=`<h3>${x.h}</h3><p>${x.p}</p><dl>${x.dl.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}</dl>`;
+  [...tabs.children].forEach(b=>b.setAttribute('aria-selected',b.textContent===k));
+}
+Object.keys(M).forEach(k=>{const b=document.createElement('button');b.role='tab';b.textContent=k;b.onclick=()=>pick(k);tabs.appendChild(b)});
+pick('Quartz');
+</script>
+</body>
+</html>
